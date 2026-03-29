@@ -38,7 +38,8 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown (chỉ hiện khi đã đăng nhập) -->
+            @auth
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -90,6 +91,14 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endauth
+            @guest
+            <!-- Login/Register buttons cho guest -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
+                <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900 transition">Đăng nhập</a>
+                <a href="{{ route('register') }}" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition shadow-sm">Đăng ký</a>
+            </div>
+            @endguest
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">

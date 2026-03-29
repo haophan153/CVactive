@@ -45,7 +45,9 @@ class JobApplicationController extends Controller
 
         // ============================================================
         // STEP 2: Authorization via Policy
+        // Eager load jobPost + user để tránh lazy-load khi check authorization
         // ============================================================
+        $application->loadMissing('jobPost.user');
         $user = auth()->user();
 
         if (!Gate::forUser($user)->allows('downloadCv', $application)) {
@@ -136,6 +138,8 @@ class JobApplicationController extends Controller
             abort(401, 'Vui lòng đăng nhập.');
         }
 
+        // Eager load jobPost + user để tránh lazy-load khi check authorization
+        $application->loadMissing('jobPost.user');
         $user = auth()->user();
 
         if (!Gate::forUser($user)->allows('downloadCv', $application)) {
@@ -195,6 +199,9 @@ class JobApplicationController extends Controller
     {
         $user = auth()->user();
 
+        // Eager load jobPost + user để tránh lazy-load khi check authorization
+        $application->loadMissing('jobPost.user');
+
         if (!Gate::forUser($user)->allows('view', $application)) {
             abort(403, 'Bạn không có quyền xem thông tin ứng viên này.');
         }
@@ -208,6 +215,9 @@ class JobApplicationController extends Controller
     public function updateStatus(Request $request, JobApplication $application)
     {
         $user = auth()->user();
+
+        // Eager load jobPost + user để tránh lazy-load khi check authorization
+        $application->loadMissing('jobPost.user');
 
         if (!Gate::forUser($user)->allows('updateStatus', $application)) {
             abort(403, 'Bạn không có quyền cập nhật trạng thái.');
@@ -236,6 +246,9 @@ class JobApplicationController extends Controller
     public function destroy(JobApplication $application)
     {
         $user = auth()->user();
+
+        // Eager load jobPost + user để tránh lazy-load khi check authorization
+        $application->loadMissing('jobPost.user');
 
         if (!Gate::forUser($user)->allows('delete', $application)) {
             abort(403, 'Bạn không có quyền xóa đơn ứng tuyển này.');
@@ -268,6 +281,9 @@ class JobApplicationController extends Controller
     public function searchCv(Request $request, JobPost $jobPost)
     {
         $user = auth()->user();
+
+        // Eager load user để tránh lazy-load khi check authorization
+        $jobPost->loadMissing('user');
 
         if (!Gate::forUser($user)->allows('searchCv', $jobPost)) {
             abort(403, 'Bạn không có quyền truy cập!');
@@ -323,11 +339,14 @@ class JobApplicationController extends Controller
     {
         $user = auth()->user();
 
+        // Eager load user để tránh lazy-load khi check authorization
+        $jobPost->loadMissing('user');
+
         if (!Gate::forUser($user)->allows('viewApplications', $jobPost)) {
             abort(403, 'Bạn không có quyền truy cập!');
         }
 
-        $query = JobApplication::with(['user', 'cv'])
+        $query = JobApplication::with(['user', 'cv', 'jobPost'])
             ->where('job_post_id', $jobPost->id);
 
         if ($request->status && $request->status !== 'all') {

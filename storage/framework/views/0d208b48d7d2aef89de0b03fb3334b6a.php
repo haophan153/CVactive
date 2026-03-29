@@ -1,13 +1,11 @@
-@extends('layouts.admin')
+<?php $__env->startSection('title', 'Chi tiết ứng viên - CVactive'); ?>
 
-@section('title', 'Chi tiết ứng viên - CVactive')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="py-6">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Back Link -->
         <div class="mb-6">
-            <a href="{{ route('hr.applications.index') }}" class="text-indigo-600 hover:text-indigo-900 flex items-center gap-2">
+            <a href="<?php echo e(route('hr.applications.index')); ?>" class="text-indigo-600 hover:text-indigo-900 flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -26,54 +24,56 @@
                     <div class="px-6 py-6">
                         <div class="flex items-start gap-4 mb-6">
                             <div class="flex-shrink-0 h-16 w-16 bg-indigo-100 rounded-full flex items-center justify-center">
-                                <span class="text-2xl text-indigo-600 font-bold">{{ substr($application->full_name, 0, 1) }}</span>
+                                <span class="text-2xl text-indigo-600 font-bold"><?php echo e(substr($application->full_name, 0, 1)); ?></span>
                             </div>
                             <div class="flex-1">
-                                <h2 class="text-2xl font-bold text-gray-900">{{ $application->full_name }}</h2>
-                                <p class="text-gray-600">{{ $application->email }}</p>
-                                @if($application->phone)
-                                    <p class="text-gray-600">{{ $application->phone }}</p>
-                                @endif
+                                <h2 class="text-2xl font-bold text-gray-900"><?php echo e($application->full_name); ?></h2>
+                                <p class="text-gray-600"><?php echo e($application->email); ?></p>
+                                <?php if($application->phone): ?>
+                                    <p class="text-gray-600"><?php echo e($application->phone); ?></p>
+                                <?php endif; ?>
                             </div>
                         </div>
 
                         <div class="border-t pt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Vị trí ứng tuyển</h3>
                             <div class="bg-gray-50 rounded-lg p-4">
-                                <p class="font-medium text-gray-900">{{ $application->jobPost->title ?? 'N/A' }}</p>
-                                <p class="text-sm text-gray-600">{{ $application->jobPost->company_name ?? 'N/A' }}</p>
+                                <p class="font-medium text-gray-900"><?php echo e($application->jobPost->title ?? 'N/A'); ?></p>
+                                <p class="text-sm text-gray-600"><?php echo e($application->jobPost->company_name ?? 'N/A'); ?></p>
                                 <div class="mt-2 flex flex-wrap gap-4 text-sm text-gray-500">
-                                @if($application->jobPost && $application->jobPost->location)
+                                <?php if($application->jobPost && $application->jobPost->location): ?>
                                     <span class="flex items-center gap-1">
                                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             </svg>
-                                            {{ $application->jobPost->location }}
+                                            <?php echo e($application->jobPost->location); ?>
+
                                         </span>
-                                    @endif
-                                    @if($application->jobPost && $application->jobPost->job_type)
+                                    <?php endif; ?>
+                                    <?php if($application->jobPost && $application->jobPost->job_type): ?>
                                         <span class="flex items-center gap-1">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            {{ $application->jobPost->job_type }}
+                                            <?php echo e($application->jobPost->job_type); ?>
+
                                         </span>
-                                    @endif
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
 
-                        @if($application->cover_letter)
+                        <?php if($application->cover_letter): ?>
                             <div class="border-t pt-6 mt-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-3">Thư giới thiệu</h3>
-                                <div class="bg-gray-50 rounded-lg p-4 text-gray-700 whitespace-pre-wrap">{{ $application->cover_letter }}</div>
+                                <div class="bg-gray-50 rounded-lg p-4 text-gray-700 whitespace-pre-wrap"><?php echo e($application->cover_letter); ?></div>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
-                        @if($application->hasCvFile())
+                        <?php if($application->hasCvFile()): ?>
                             <div class="border-t pt-6 mt-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-3">CV đính kèm</h3>
-                                <a href="{{ route('hr.applications.cv.download', $application) }}"
+                                <a href="<?php echo e(route('hr.applications.cv.download', $application)); ?>"
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -87,7 +87,7 @@
                                     File bảo mật - chỉ người được ủy quyền mới có thể tải
                                 </p>
                             </div>
-                        @endif
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -100,15 +100,15 @@
                         <h3 class="font-semibold text-gray-900">Trạng thái</h3>
                     </div>
                     <div class="px-6 py-6">
-                        <form method="POST" action="{{ route('hr.applications.updateStatus', $application) }}">
-                            @csrf
-                            @method('PATCH')
+                        <form method="POST" action="<?php echo e(route('hr.applications.updateStatus', $application)); ?>">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('PATCH'); ?>
                             <div class="mb-4">
                                 <select name="status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                    <option value="pending" {{ $application->status == 'pending' ? 'selected' : '' }}>Chờ duyệt</option>
-                                    <option value="reviewing" {{ $application->status == 'reviewing' ? 'selected' : '' }}>Đang xem xét</option>
-                                    <option value="approved" {{ $application->status == 'approved' ? 'selected' : '' }}>Đã duyệt</option>
-                                    <option value="rejected" {{ $application->status == 'rejected' ? 'selected' : '' }}>Từ chối</option>
+                                    <option value="pending" <?php echo e($application->status == 'pending' ? 'selected' : ''); ?>>Chờ duyệt</option>
+                                    <option value="reviewing" <?php echo e($application->status == 'reviewing' ? 'selected' : ''); ?>>Đang xem xét</option>
+                                    <option value="approved" <?php echo e($application->status == 'approved' ? 'selected' : ''); ?>>Đã duyệt</option>
+                                    <option value="rejected" <?php echo e($application->status == 'rejected' ? 'selected' : ''); ?>>Từ chối</option>
                                 </select>
                             </div>
                             <button type="submit" class="w-full px-4 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition">
@@ -124,12 +124,12 @@
                         <h3 class="font-semibold text-gray-900">Ghi chú</h3>
                     </div>
                     <div class="px-6 py-6">
-                        <form method="POST" action="{{ route('hr.applications.updateStatus', $application) }}">
-                            @csrf
-                            @method('PATCH')
+                        <form method="POST" action="<?php echo e(route('hr.applications.updateStatus', $application)); ?>">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('PATCH'); ?>
                             <textarea name="notes" rows="4" 
                                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                placeholder="Thêm ghi chú về ứng viên...">{{ $application->notes }}</textarea>
+                                placeholder="Thêm ghi chú về ứng viên..."><?php echo e($application->notes); ?></textarea>
                             <button type="submit" class="mt-3 w-full px-4 py-2 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-900 transition">
                                 Lưu ghi chú
                             </button>
@@ -143,18 +143,18 @@
                         <div class="space-y-3">
                             <div>
                                 <p class="text-sm text-gray-500">Ngày nộp</p>
-                                <p class="font-medium text-gray-900">{{ $application->applied_at->format('d/m/Y H:i') }}</p>
+                                <p class="font-medium text-gray-900"><?php echo e($application->applied_at->format('d/m/Y H:i')); ?></p>
                             </div>
                             <div>
                                 <p class="text-sm text-gray-500">Cập nhật cuối</p>
-                                <p class="font-medium text-gray-900">{{ $application->updated_at->format('d/m/Y H:i') }}</p>
+                                <p class="font-medium text-gray-900"><?php echo e($application->updated_at->format('d/m/Y H:i')); ?></p>
                             </div>
-                            @if($application->user)
+                            <?php if($application->user): ?>
                                 <div>
                                     <p class="text-sm text-gray-500">Tài khoản</p>
-                                    <p class="font-medium text-gray-900">{{ $application->user->name ?? 'N/A' }}</p>
+                                    <p class="font-medium text-gray-900"><?php echo e($application->user->name ?? 'N/A'); ?></p>
                                 </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -162,9 +162,9 @@
                 <!-- Delete Card -->
                 <div class="bg-white rounded-lg shadow overflow-hidden">
                     <div class="px-6 py-4">
-                        <form method="POST" action="{{ route('hr.applications.destroy', $application) }}" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn ứng tuyển này?');">
-                            @csrf
-                            @method('DELETE')
+                        <form method="POST" action="<?php echo e(route('hr.applications.destroy', $application)); ?>" onsubmit="return confirm('Bạn có chắc chắn muốn xóa đơn ứng tuyển này?');">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
                             <button type="submit" class="w-full px-4 py-2 bg-red-50 text-red-700 font-medium rounded-lg hover:bg-red-100 transition flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -178,4 +178,6 @@
         </div>
     </div>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\CLone Git\CVactive_ST5\resources\views/hr/applications/show.blade.php ENDPATH**/ ?>

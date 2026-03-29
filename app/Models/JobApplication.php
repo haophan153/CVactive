@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class JobApplication extends Model
 {
@@ -93,7 +92,7 @@ class JobApplication extends Model
     public function hasCvFile(): bool
     {
         if ($this->cv_path) {
-            return Storage::disk('local')->exists('private/' . $this->cv_path);
+            return Storage::disk('local')->exists($this->cv_path);
         }
 
         if ($this->cv_file) {
@@ -117,7 +116,7 @@ class JobApplication extends Model
     public function deleteCvFile(): void
     {
         if ($this->cv_path) {
-            Storage::disk('local')->delete('private/' . $this->cv_path);
+            Storage::disk('local')->delete($this->cv_path);
         }
 
         if ($this->cv_file) {
