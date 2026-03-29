@@ -19,8 +19,8 @@
         <div class="bg-white rounded-lg shadow mb-6 p-6">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900">{{ $jobPost->title }}</h1>
-                    <p class="text-gray-600">{{ $jobPost->company_name }}</p>
+                    <h1 class="text-2xl font-bold text-gray-900">{{ $jobPost->title ?? 'N/A' }}</h1>
+                    <p class="text-gray-600">{{ $jobPost->company_name ?? 'N/A' }}</p>
                     <div class="flex flex-wrap gap-4 mt-2 text-sm text-gray-500">
                         @if($jobPost->location)
                             <span class="flex items-center gap-1">

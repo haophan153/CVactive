@@ -40,18 +40,18 @@
                         <div class="border-t pt-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Vị trí ứng tuyển</h3>
                             <div class="bg-gray-50 rounded-lg p-4">
-                                <p class="font-medium text-gray-900">{{ $application->jobPost->title }}</p>
-                                <p class="text-sm text-gray-600">{{ $application->jobPost->company_name }}</p>
+                                <p class="font-medium text-gray-900">{{ $application->jobPost->title ?? 'N/A' }}</p>
+                                <p class="text-sm text-gray-600">{{ $application->jobPost->company_name ?? 'N/A' }}</p>
                                 <div class="mt-2 flex flex-wrap gap-4 text-sm text-gray-500">
-                                    @if($application->jobPost->location)
-                                        <span class="flex items-center gap-1">
-                                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                @if($application->jobPost && $application->jobPost->location)
+                                    <span class="flex items-center gap-1">
+                                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             </svg>
                                             {{ $application->jobPost->location }}
                                         </span>
                                     @endif
-                                    @if($application->jobPost->job_type)
+                                    @if($application->jobPost && $application->jobPost->job_type)
                                         <span class="flex items-center gap-1">
                                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -70,16 +70,22 @@
                             </div>
                         @endif
 
-                        @if($application->cv_file)
+                        @if($application->hasCvFile())
                             <div class="border-t pt-6 mt-6">
                                 <h3 class="text-lg font-semibold text-gray-900 mb-3">CV đính kèm</h3>
-                                <a href="{{ asset('storage/' . $application->cv_file) }}" target="_blank" 
+                                <a href="{{ route('hr.applications.cv.download', $application) }}"
                                     class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg hover:bg-indigo-100 transition">
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                     Tải xuống CV
                                 </a>
+                                <p class="text-xs text-gray-500 mt-2">
+                                    <svg class="w-3 h-3 inline-block mr-1 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                    File bảo mật - chỉ người được ủy quyền mới có thể tải
+                                </p>
                             </div>
                         @endif
                     </div>

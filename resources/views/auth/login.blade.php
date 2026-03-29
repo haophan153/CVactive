@@ -56,4 +56,12 @@
             </x-primary-button>
         </div>
     </form>
+
+    {{-- Link to Register --}}
+    <div class="mt-6 text-center text-sm text-gray-600">
+        Chưa có tài khoản?
+        <a href="{{ route('register') }}" class="text-indigo-600 hover:text-indigo-700 font-medium hover:underline">
+            Đăng ký ngay
+        </a>
+    </div>
 </x-guest-layout>

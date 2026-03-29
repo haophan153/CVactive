@@ -146,7 +146,8 @@
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
+            <!-- Settings Dropdown (chỉ hiện khi đã đăng nhập) -->
+            <?php if(auth()->guard()->check()): ?>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <?php if (isset($component)) { $__componentOriginaldf8083d4a852c446488d8d384bbc7cbe = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginaldf8083d4a852c446488d8d384bbc7cbe = $attributes; } ?>
@@ -307,6 +308,14 @@
 <?php unset($__componentOriginaldf8083d4a852c446488d8d384bbc7cbe); ?>
 <?php endif; ?>
             </div>
+            <?php endif; ?>
+            <?php if(auth()->guard()->guest()): ?>
+            <!-- Login/Register buttons cho guest -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-3">
+                <a href="<?php echo e(route('login')); ?>" class="text-sm text-gray-600 hover:text-gray-900 transition">Đăng nhập</a>
+                <a href="<?php echo e(route('register')); ?>" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition shadow-sm">Đăng ký</a>
+            </div>
+            <?php endif; ?>
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">

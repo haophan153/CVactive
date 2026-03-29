@@ -134,8 +134,8 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <div class="text-sm text-gray-900">{{ $application->jobPost->title }}</div>
-                                        <div class="text-sm text-gray-500">{{ $application->jobPost->company_name }}</div>
+                                        <div class="text-sm text-gray-900">{{ $application->jobPost->title ?? 'N/A' }}</div>
+                                        <div class="text-sm text-gray-500">{{ $application->jobPost->company_name ?? 'N/A' }}</div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900">{{ $application->applied_at->format('d/m/Y') }}</div>
